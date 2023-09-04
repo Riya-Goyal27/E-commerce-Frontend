@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from './../assets/logo.svg'
+import logo from '../../public/assets/logo.svg'
 import { FaShoppingCart, FaBars } from 'react-icons/fa';
 import { IoPersonSharp, IoCloseSharp } from "react-icons/io5";
 import {Link} from 'react-router-dom'

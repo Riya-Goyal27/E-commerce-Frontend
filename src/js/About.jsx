@@ -1,5 +1,5 @@
 import React from 'react'
-import home2 from './../assets/home-2.jpeg'
+import home2 from '../../public/assets/home-2.jpeg';
 import Path from './Path'
 import Header from './Header';
 

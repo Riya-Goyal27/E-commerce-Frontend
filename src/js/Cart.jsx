@@ -85,7 +85,7 @@ const Cart = ({cartItems, maxQuantityAllowed}) => {
               return (
                 <article className='grid grid-cols-[1fr_1fr_1fr_1fr_auto] max-surface-duo:grid-cols-[1fr_1fr_1fr_auto] max-iphone:grid-cols-[1fr_1fr_auto] max-galaxy:grid-cols-[1fr_1fr] items-center grid-rows-[75px] gap-x-4 gap-y-12 mb-12 justify-items-center' key={index}>
                   <Link to={`/products/${id}`} className='grid grid-cols-[100px_200px] max-surface-duo:grid-cols-[100px_100px] gap-4 items-center grid-rows-[75px]'>
-                    <img src={`/src/assets/${image}.jpeg`} alt={title} className='h-full w-full object-cover rounded block hover:shadow-md'/>
+                    <img src={`/assets/${image}.jpeg`} alt={title} className='h-full w-full object-cover rounded block hover:shadow-md'/>
                     <div>
                       <h5 className='text-[0.85rem] leading-tight capitalize tracking-widest font-bold hover:underline'>{title}</h5>
                       <p className='text-[0.85rem] text-[#617d98] tracking-widest capitalize flex items-center justify-start'>color :<span className={`w-3 h-3 inline-block bg-[${color}] ml-2 rounded opacity-75`}></span></p>

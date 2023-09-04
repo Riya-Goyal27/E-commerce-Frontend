@@ -18,7 +18,7 @@ const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
   });
   if(matchedItem){
   const {title, reviews, rating, brand, available, colors, description, images, price} = data.find(item => item.id == params.productId)
-  const [url, setUrl] = useState(`/src/assets/${images[0]}.jpeg`)
+  const [url, setUrl] = useState(`/assets/${images[0]}.jpeg`)
   const [colorIndex, setColorIndex] = useState(0);
   const [itemQuantity, setItemQuantity] = useState(1);
   const fullStars = Math.floor(rating);
@@ -71,7 +71,7 @@ const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
           <section>
             <img src={url} alt={title} className='block w-full h-image surface-duo:max-tablet:h-[550px] max-iphone:h-[400px] rounded object-cover'/>
             <div className='grid grid-cols-5 mt-4 gap-4 max-iphone:gap-1.5'>
-              { images.map((item, index) => <img src={`/src/assets/${item}.jpeg`} alt="title" className='h-[75px] surface-duo:max-tablet:h-[100px] max-iphone:h-[60px] cursor-pointer w-full rounded object-cover' key={index} onClick={(event) => {setUrl(event.target.getAttribute('src'))}} />) }
+              { images.map((item, index) => <img src={`/assets/${item}.jpeg`} alt="title" className='h-[75px] surface-duo:max-tablet:h-[100px] max-iphone:h-[60px] cursor-pointer w-full rounded object-cover' key={index} onClick={(event) => {setUrl(event.target.getAttribute('src'))}} />) }
             </div>
           </section>
           <section>

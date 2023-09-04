@@ -297,7 +297,7 @@ const GridView = ({title, price, url, id}) => {
   return (
       <article>
         <div className='relative rounded overflow-hidden'>
-          <img src={`/src/assets/${url}.jpeg`} alt={title} className='w-full h-[175px] block object-cover'/>
+          <img src={`/assets/${url}.jpeg`} alt={title} className='w-full h-[175px] block object-cover'/>
           <Link to={`${id}`} className='inline-block absolute w-full h-[175px] top-0 left-0 bg-black/40 opacity-0 hover:opacity-100 transition linear duration-300 cursor-pointer'>
             <div className='h-10 w-10 rounded-full bg-yellow-700 absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 flex items-center justify-center'>
               <FaSearch color='#fff' size='20px' />
@@ -316,7 +316,7 @@ const ListView = ({title, price, url, id, description}) => {
   return (
     <article className='grid grid-cols-[auto_1fr] gap-x-8 items-center' key={id}>
       <Link to={`${id}`}>
-        <img src={`/src/assets/${url}.jpeg`} alt={title} className='block w-[300px] h-[200px] object-cover rounded mb-4 max-tablet:mb-0' />
+        <img src={`/assets/${url}.jpeg`} alt={title} className='block w-[300px] h-[200px] object-cover rounded mb-4 max-tablet:mb-0' />
       </Link>
       <div>
         <h4 className='text-[1.5rem] max-tablet:text-[1.2rem] mb-2 max-tablet:mb-0 font-bold tracking-[0.1rem] capitalize'>{title}</h4>
