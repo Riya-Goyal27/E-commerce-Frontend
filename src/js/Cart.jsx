@@ -5,47 +5,57 @@ import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import Header from './Header';
 
-const Cart = ({cartItems, maxQuantityAllowed}) => {
-  const [cart, setCart] = useState(cartItems.current);
+const Cart = ({cartItems, maxQuantityAllowed, setCartItems, setTotalItems}) => {
+  const [cart, setCart] = useState(cartItems);
   const [subtotal, setSubtotal] = useState(cart.reduce(((total, item) => total + item.quantity*item.price ), 0))
   const shippingCharges = 5.34;
   const total = subtotal + shippingCharges;
   
   const clearCart = () => {
-    cartItems.current = [];
-    setCart(cartItems.current);
+    setCartItems([]);
+    setCart(cartItems);
+    setTotalItems(0);
   }
 
   const increaseQuantity = (image, color, title, price, quantity) => {
     if(quantity < maxQuantityAllowed){
-      cartItems.current.some(item => {
+      let tempArr = cartItems;
+      tempArr.some(item => {
         if(item.image == image && item.color == color && item.title == title && item.price == price){
           item.quantity+=1;
           return true;
         }
       })
-      const newSubtotal = cartItems.current.reduce(((total, item) => total + item.quantity*item.price ), 0)
+      setCartItems(tempArr);
+      setTotalItems(cartItems.reduce(((total, item) => total + item.quantity), 0));
+      const newSubtotal = cartItems.reduce(((total, item) => total + item.quantity*item.price ), 0)
       setSubtotal(newSubtotal);
     } 
   }
 
   const decreaseQuantity = (image, color, title, price) => {
-    cartItems.current.some(item => {
+    let tempArr = cartItems;
+    tempArr.some(item => {
       if(item.image == image && item.color == color && item.title == title && item.price == price){
         item.quantity-=1;
+        setCartItems(tempArr)
+        setTotalItems(cartItems.reduce(((total, item) => total + item.quantity), 0));
+        const newSubtotal = cartItems.reduce(((total, item) => total + item.quantity*item.price ), 0)
+        setSubtotal(newSubtotal);
         if(item.quantity == 0)
         deleteItem(image, color, title, price);
         return true;
       }
     })
-    const newSubtotal = cartItems.current.reduce(((total, item) => total + item.quantity*item.price ), 0)
-    setSubtotal(newSubtotal);
   }
 
   const deleteItem = (image, color, title, price) => {
-    cartItems.current = cartItems.current.filter(item => (item.image != image || item.color != color || item.title != title || item.price != price))
-    setCart(cartItems.current)
-    const newSubtotal = cartItems.current.reduce(((total, item) => total + item.quantity*item.price ), 0)
+    let tempArr = cartItems;
+    tempArr = tempArr.filter(item => (item.image != image || item.color != color || item.title != title || item.price != price))
+    setCartItems(tempArr)
+    setCart(tempArr)
+    setTotalItems(tempArr.reduce(((total, item) => total + item.quantity), 0));
+    const newSubtotal = tempArr.reduce(((total, item) => total + item.quantity*item.price ), 0)
     setSubtotal(newSubtotal);
   }
 
@@ -56,7 +66,6 @@ const Cart = ({cartItems, maxQuantityAllowed}) => {
   if(cart.length == 0){
     return (
       <>
-       <Header cartItems={cartItems}/>
         <Path title="cart" />
         <main className='min-h-minh py-20 max-iphone:w-laptop mx-auto'>
           <div className='text-center'>
@@ -69,7 +78,6 @@ const Cart = ({cartItems, maxQuantityAllowed}) => {
   }
   return (
     <>
-     <Header cartItems={cartItems}/>
       <Path title="cart" />
       <main className='min-h-minh'>
         <section className='w-laptop max-w-maxw mx-auto py-20'>

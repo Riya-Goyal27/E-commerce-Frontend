@@ -6,9 +6,8 @@ import { BsGridFill } from "react-icons/bs";
 import { FaBars, FaSearch } from "react-icons/fa";
 import {TiTick} from 'react-icons/ti'
 import Header from './Header';
-import { Title } from 'react-admin';
 
-const Products = ({cartItems, filters, searchValue, maxPrice, setSearchValue, categoryIndex, setCategoryIndex, range, setRange, allColors, setAllColors, colorIndex, setColorIndex, freeShippingChecked, setFreeShippingChecked, companyValue, setCompanyValue, isGrid, setIsGrid}) => {
+const Products = ({filters, searchValue, maxPrice, setSearchValue, categoryIndex, setCategoryIndex, range, setRange, allColors, setAllColors, colorIndex, setColorIndex, freeShippingChecked, setFreeShippingChecked, companyValue, setCompanyValue, isGrid, setIsGrid}) => {
 
   const companies = Array.from(new Set(
     data.map(item => item.brand)
@@ -173,7 +172,6 @@ const Products = ({cartItems, filters, searchValue, maxPrice, setSearchValue, ca
 
   return (
     <>
-      <Header cartItems={cartItems}/>
       <Path title="products" />
       <div>
         <div className='grid grid-cols-[200px_1fr] max-surface-duo:grid-cols-1 gap-6 w-[95vw] mx-auto my-16 max-w-[1170px]'>

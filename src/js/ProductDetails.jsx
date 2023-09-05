@@ -7,7 +7,7 @@ import {FaPlus, FaMinus} from 'react-icons/fa'
 import data from './data';
 import Header from './Header';
 
-const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
+const ProductDetails = ({cartItems, maxQuantityAllowed, setCartItems, setTotalItems}) => {
   const params = useParams();
   const matchedItem = data.find(item => item.id == params.productId)
   const navigate = useNavigate();
@@ -34,7 +34,8 @@ const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
       quantity: itemQuantity,
       id: params.productId
     }
-    const alreadyInCart = cartItems.current.some(item => {
+    let tempArr = cartItems;
+    const alreadyInCart = tempArr.some(item => {
       if(item.image == newItem.image && item.color == newItem.color && item.title == newItem.title && item.price == newItem.price){
         item.quantity+=itemQuantity;
         if(item.quantity > 3)
@@ -43,7 +44,10 @@ const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
       }
     })
     if(!alreadyInCart)
-    cartItems.current.push(newItem);
+    tempArr.push(newItem)
+
+    setCartItems(tempArr);
+    setTotalItems(cartItems.reduce(((total, item) => total + item.quantity), 0));
   }
 
   const increase = () => {
@@ -66,7 +70,6 @@ const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
   
   return (
     <>
-      <Header cartItems={cartItems}/>
       <Path title={title} isItem={true}/>
       <div className='w-laptop max-tablet:w-tablet max-w-maxw py-20 mx-auto'>
         <Link to="/products"  className=' block w-[180px] text-custom-text bg-yellow-700 uppercase transition linear duration-300 cursor-pointer tracking-widest rounded shadow-md py-1.5 px-3 text-sm text-center hover:bg-custom-text hover:text-yellow-700'>back to products</Link>

@@ -3,13 +3,12 @@ import home2 from '../../public/assets/home-2.jpeg';
 import Path from './Path'
 import Header from './Header';
 
-const About = ({cartItems}) => {
+const About = () => {
   useEffect(() => {
     document.title="About"
   }, [])
   return (
     <>
-     <Header cartItems={cartItems}/>
       <Path title="about" />
       <section className='w-laptop max-tablet:w-tablet mx-auto max-w-maxw py-20 grid grid-cols-2 max-tablet:grid-cols-1 gap-16 min-h-minh'>
         <img src={home2} alt="nice desk" className='w-full h-image block rounded object-cover'/>

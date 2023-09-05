@@ -10,11 +10,13 @@ import NoMatch from './js/NoMatch'
 import ProductDetails from './js/ProductDetails'
 import ScrollToTop from './js/ScrollToTop'
 import data from './js/data'
+import Header from './js/Header'
 
 
 function App() {
 
-  const cartItems = useRef([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
   const maxQuantityAllowed = 3;
   const [searchValue, setSearchValue] = useState('');
   const prices = data.map(item => item.price)
@@ -37,33 +39,43 @@ function App() {
   
   return (
     <>
-      <main>
-        <ScrollToTop />
-        <Routes>
-          <Route index element={<Home cartItems={cartItems} />} />
-          <Route path="about" element={<About cartItems={cartItems}  />} />
-          <Route path="products">
-            <Route index element={<Products 
-              cartItems={cartItems}  
-              filters={filters} 
-              maxPrice={maxPrice} 
-              searchValue={searchValue} setSearchValue={setSearchValue} 
-              categoryIndex={categoryIndex} setCategoryIndex={setCategoryIndex} 
-              range={range} setRange={setRange}
-              allColors={allColors} setAllColors={setAllColors}
-              colorIndex={colorIndex} setColorIndex={setColorIndex}
-              freeShippingChecked={freeShippingChecked} setFreeShippingChecked={setFreeShippingChecked}
-              companyValue={companyValue} setCompanyValue={setCompanyValue}
-              isGrid={isGrid} setIsGrid={setIsGrid}
-              />} />
-            <Route path=":productId" element={<ProductDetails cartItems={cartItems} maxQuantityAllowed={maxQuantityAllowed} />} />
-          </Route>
-          <Route path="cart" element={<Cart cartItems={cartItems} maxQuantityAllowed={maxQuantityAllowed}/>} />
-          <Route path="login" element={<Login cartItems={cartItems}  />} />
-          <Route path="*" element={<NoMatch cartItems={cartItems}  />} />
-        </Routes>
-        <Footer />
-      </main>  
+      <Layout totalItems={totalItems}>
+        <main>
+          <ScrollToTop />
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="products">
+              <Route index element={<Products  
+                filters={filters} 
+                maxPrice={maxPrice} 
+                searchValue={searchValue} setSearchValue={setSearchValue} 
+                categoryIndex={categoryIndex} setCategoryIndex={setCategoryIndex} 
+                range={range} setRange={setRange}
+                allColors={allColors} setAllColors={setAllColors}
+                colorIndex={colorIndex} setColorIndex={setColorIndex}
+                freeShippingChecked={freeShippingChecked} setFreeShippingChecked={setFreeShippingChecked}
+                companyValue={companyValue} setCompanyValue={setCompanyValue}
+                isGrid={isGrid} setIsGrid={setIsGrid}
+                />} />
+              <Route path=":productId" element={<ProductDetails cartItems={cartItems} maxQuantityAllowed={maxQuantityAllowed} setCartItems={setCartItems} setTotalItems={setTotalItems} />} />
+            </Route>
+            <Route path="cart" element={<Cart cartItems={cartItems} maxQuantityAllowed={maxQuantityAllowed} setCartItems={setCartItems} setTotalItems={setTotalItems} />} />
+            <Route path="login" element={<Login />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </main>  
+      </Layout>
+    </>
+  )
+}
+
+const Layout = ({children, totalItems}) => {
+  return (
+    <>
+      <Header totalItems={totalItems}/>
+        {children}
+      <Footer />
     </>
   )
 }

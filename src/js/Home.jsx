@@ -10,14 +10,13 @@ import { FaBars, FaSearch} from "react-icons/fa";
 import {GrHistory} from 'react-icons/gr'
 import Header from './Header';
 
-const Home = ({cartItems}) => {
+const Home = () => {
   useEffect(() => {
     document.title="Home"
   }, [])
 
   return (
     <>
-     <Header cartItems={cartItems}/>
       <FirstComp />
       <FeaturedProducts />
       <Features />

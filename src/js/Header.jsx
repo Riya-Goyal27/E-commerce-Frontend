@@ -4,8 +4,7 @@ import { FaShoppingCart, FaBars } from 'react-icons/fa';
 import { IoPersonSharp, IoCloseSharp } from "react-icons/io5";
 import {Link} from 'react-router-dom'
 
-const Header = ({cartItems}) => {
-  const totalItems = cartItems.current.reduce(((total, item) => total + item.quantity), 0)
+const Header = ({totalItems}) => {
   const [isSidemenu, setIsSidemenu] = useState(false);
   return (
     <>
