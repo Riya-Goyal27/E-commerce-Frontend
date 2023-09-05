@@ -3,7 +3,6 @@ import Path from './Path'
 import {FaPlus, FaMinus} from 'react-icons/fa'
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
-import Header from './Header';
 
 const Cart = ({cartItems, maxQuantityAllowed, setCartItems, setTotalItems}) => {
   const [cart, setCart] = useState(cartItems);

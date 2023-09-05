@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import logo from '../../public/assets/logo.svg'
 import { FaShoppingCart, FaBars } from 'react-icons/fa';
 import { IoPersonSharp, IoCloseSharp } from "react-icons/io5";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Navbar from './Navbar';
+import Sidemenu from './SideMenu';
 
 const Header = ({totalItems}) => {
   const [isSidemenu, setIsSidemenu] = useState(false);
@@ -12,7 +13,7 @@ const Header = ({totalItems}) => {
       <div className='w-tablet max-w-maxw grid grid-cols-[auto_1fr_auto] max-ipad-mini:flex max-ipad-mini:justify-between'>
         <div className='flex items-center'>
           <Link to="/">
-            <img src={logo} alt="comfy sloth" className='w-[200px] ml-[-15px]'/>
+            <img src='assets/logo.svg' alt="comfy sloth" className='w-[200px] ml-[-15px]'/>
           </Link>
         </div>
         <ul className='flex justify-center max-ipad-mini:hidden'>
@@ -40,7 +41,7 @@ const Header = ({totalItems}) => {
     </header>
     <div className={`fixed top-0 left-0 w-full h-full bg-white z-50 transition linear duration-500 ${isSidemenu ? 'translate-x-0' : '-translate-x-full'}`}>
       <div className='py-4 px-6 flex items-center justify-between'>
-        <img src={logo} alt="comfy sloth" className='h-[45px]'/>
+        <img src='assets/logo.svg' alt="comfy sloth" className='h-[45px]'/>
         <button type='button' className='text-2 cursor-pointer text-[#bb2525] hover:opacity-75 transition linear duration-300' onClick={() => setIsSidemenu(false)} >
           <IoCloseSharp />
         </button>
@@ -65,23 +66,6 @@ const Header = ({totalItems}) => {
       </div>
     </div>
     </>
-  )
-}
-
-const Navbar = ({item, path}) => {
-  return (
-    <li className='mx-2 flex items-center flex-col justify-center border-yellow-700 hover:border-b-2 hover:pt-[2px]'>
-      <Link to={path} className='capitalize tracking-widest px-2 h-full flex items-center'>{item}</Link>
-    </li>
-    
-  )
-}
-
-const Sidemenu = ({item, path}) => {
-  return (
-      <li>
-        <Link to={path} className='block capitalize py-4 px-6 text-[#324d67] tracking-widest transition linear duration-300 hover:bg-[#f1f5f8] hover:text-[#243a52] hover:pl-8'>{item}</Link>
-      </li>
   )
 }
 

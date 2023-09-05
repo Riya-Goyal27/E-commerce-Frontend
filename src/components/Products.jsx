@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Path from './Path'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import data from './data'
 import { BsGridFill } from "react-icons/bs";
-import { FaBars, FaSearch } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import {TiTick} from 'react-icons/ti'
-import Header from './Header';
+import DataEmpty from './DataEmpty';
+
 
 const Products = ({filters, searchValue, maxPrice, setSearchValue, categoryIndex, setCategoryIndex, range, setRange, allColors, setAllColors, colorIndex, setColorIndex, freeShippingChecked, setFreeShippingChecked, companyValue, setCompanyValue, isGrid, setIsGrid}) => {
 
@@ -260,72 +261,6 @@ const Products = ({filters, searchValue, maxPrice, setSearchValue, categoryIndex
 
       <Outlet />
     </>
-  )
-}
-
-const DataEmpty = ({newdata, isGrid}) => {
-  if(newdata.length == 0){
-    return (
-      <h5 className='font-bold tracking-[0.1rem] leading-tight mb-3'>Sorry, no products matched your search.</h5>
-    )
-  }
-  return (
-    <CheckGrid newdata={newdata} isGrid={isGrid} />
-  )
-}
-
-const CheckGrid = ({newdata, isGrid}) => {
-  if(isGrid){
-    return (
-    <section> 
-      <div className='grid grid-cols-3 max-tablet:grid-cols-2 gap-x-6 gap-y-8 max-iphone:grid-cols-1'>
-        { newdata.map((item, index) => <GridView title={item.title} price={item.price} url={item.images[0]} id={item.id} key={item.id}/>) }
-      </div>
-    </section>
-    )
-  }
-  return (
-    <section>
-      <div className='grid gap-y-12'>
-        { newdata.map((item, index) => <ListView title={item.title} price={item.price} url={item.images[0]} id={item.id} description={item.description}/>) }
-      </div>
-    </section>
-  )
-}
-
-const GridView = ({title, price, url, id}) => {
-  return (
-      <article>
-        <div className='relative rounded overflow-hidden'>
-          <img src={`/assets/${url}.jpeg`} alt={title} className='w-full h-[175px] block object-cover'/>
-          <Link to={`${id}`} className='inline-block absolute w-full h-[175px] top-0 left-0 bg-black/40 opacity-0 hover:opacity-100 transition linear duration-300 cursor-pointer'>
-            <div className='h-10 w-10 rounded-full bg-yellow-700 absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 flex items-center justify-center'>
-              <FaSearch color='#fff' size='20px' />
-            </div>
-          </Link>
-        </div>
-        <footer className='flex justify-between items-center mt-4 capitalize tracking-[0.1rem] leading-tight'>
-          <h5>{title}</h5>
-          <p className='text-yellow-700'>${price}</p>
-        </footer>
-      </article>
-  )
-}
-
-const ListView = ({title, price, url, id, description}) => {
-  return (
-    <article className='grid grid-cols-[auto_1fr] gap-x-8 items-center' key={id}>
-      <Link to={`${id}`}>
-        <img src={`/assets/${url}.jpeg`} alt={title} className='block w-[300px] h-[200px] object-cover rounded mb-4 max-tablet:mb-0' />
-      </Link>
-      <div>
-        <h4 className='text-[1.5rem] max-tablet:text-[1.2rem] mb-2 max-tablet:mb-0 font-bold tracking-[0.1rem] capitalize'>{title}</h4>
-        <h5 className='text-yellow-700 mb-3 max-tablet:mb-2 leading-tight tracking-[0.1rem]'>${price}</h5>
-        <p className='max-w-[45em] text-[#324d67] mb-4 max-tablet:hidden'>{description.substring(0, 150) + '...'}</p>
-        <p className='max-w-[45em] text-[#324d67] mb-2 hidden max-tablet:block max-tablet:text-[0.85rem]'>{description.substring(0, 95) + '...'}</p>
-        <Link to={`${id}`} className='text-[0.5rem] py-1 px-2 bg-yellow-700 rounded shadow-md text-custom-text cursor-pointer inline-block tracking-[0.1rem] transition linear duration-300 hover:bg-custom-text hover:text-yellow-700 uppercase'>details</Link>
-      </div>
-    </article>
   )
 }
 

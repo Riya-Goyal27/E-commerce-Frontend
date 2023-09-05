@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react'
-import Header from './Header'
 
 const NoMatch = () => {
   useEffect(() => {
-    document.title="Error"
+    document.title="Error";
   }, [])
   return (
     <>
