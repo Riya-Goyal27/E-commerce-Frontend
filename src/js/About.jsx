@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import home2 from '../../public/assets/home-2.jpeg';
 import Path from './Path'
 import Header from './Header';
 
 const About = ({cartItems}) => {
+  useEffect(() => {
+    document.title="About"
+  }, [])
   return (
     <>
      <Header cartItems={cartItems}/>

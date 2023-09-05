@@ -41,7 +41,6 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route index element={<Home cartItems={cartItems} />} />
-          <Route path="home" element={<Home cartItems={cartItems}  />} />
           <Route path="about" element={<About cartItems={cartItems}  />} />
           <Route path="products">
             <Route index element={<Products 

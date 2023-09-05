@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Path from './Path'
 import Header from './Header'
 
 const Login = ({cartItems}) => {
+
+  useEffect(() => {
+    document.title="Login"
+  }, [])
+
   return (
     <>
       <Header cartItems={cartItems} />

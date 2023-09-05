@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import home1 from '../../public/assets/home-1.jpeg'
 import home2 from '../../public/assets/home-2.jpeg'
 import product7 from '../../public/assets/product-7.jpeg'
@@ -11,6 +11,10 @@ import {GrHistory} from 'react-icons/gr'
 import Header from './Header';
 
 const Home = ({cartItems}) => {
+  useEffect(() => {
+    document.title="Home"
+  }, [])
+
   return (
     <>
      <Header cartItems={cartItems}/>

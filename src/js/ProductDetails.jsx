@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Path from './Path'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {BsStarFill, BsStarHalf, BsStar} from 'react-icons/bs'
@@ -60,6 +60,9 @@ const ProductDetails = ({cartItems, maxQuantityAllowed}) => {
     }
   }
 
+  useEffect(() => {
+    document.title=`Product ${params.productId}`
+  }, [])
   
   return (
     <>

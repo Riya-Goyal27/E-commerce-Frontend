@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Path from './Path'
 import {FaPlus, FaMinus} from 'react-icons/fa'
 import { MdDelete } from "react-icons/md";
@@ -48,6 +48,10 @@ const Cart = ({cartItems, maxQuantityAllowed}) => {
     const newSubtotal = cartItems.current.reduce(((total, item) => total + item.quantity*item.price ), 0)
     setSubtotal(newSubtotal);
   }
+
+  useEffect(() => {
+    document.title="Cart"
+  }, [])
   
   if(cart.length == 0){
     return (

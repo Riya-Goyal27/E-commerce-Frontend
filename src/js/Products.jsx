@@ -6,6 +6,7 @@ import { BsGridFill } from "react-icons/bs";
 import { FaBars, FaSearch } from "react-icons/fa";
 import {TiTick} from 'react-icons/ti'
 import Header from './Header';
+import { Title } from 'react-admin';
 
 const Products = ({cartItems, filters, searchValue, maxPrice, setSearchValue, categoryIndex, setCategoryIndex, range, setRange, allColors, setAllColors, colorIndex, setColorIndex, freeShippingChecked, setFreeShippingChecked, companyValue, setCompanyValue, isGrid, setIsGrid}) => {
 
@@ -87,6 +88,7 @@ const Products = ({cartItems, filters, searchValue, maxPrice, setSearchValue, ca
   }
   useEffect(() => {
     filterData();
+    document.title="Products"
   }, [])
 
   const handleChangeSearch = (e) => {
