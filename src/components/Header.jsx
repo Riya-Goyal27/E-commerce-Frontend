@@ -4,9 +4,11 @@ import { IoPersonSharp, IoCloseSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar';
 import Sidemenu from './SideMenu';
+import { useSelector } from 'react-redux';
 
-const Header = ({totalItems}) => {
+const Header = () => {
   const [isSidemenu, setIsSidemenu] = useState(false);
+  const { totalItems } = useSelector((store) => store.cart)
   return (
     <>
     <header className='h-20 bg-white flex justify-center items-center'>

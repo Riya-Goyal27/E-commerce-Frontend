@@ -1,68 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import Path from './Path'
-import {FaPlus, FaMinus} from 'react-icons/fa'
-import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { updateTotalItems, clearCartItems} from '../features/cart/cartSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import CartProduct from './CartProduct'
 
-const Cart = ({cartItems, maxQuantityAllowed, setCartItems, setTotalItems}) => {
-  const [cart, setCart] = useState(cartItems);
-  const [subtotal, setSubtotal] = useState(cart.reduce(((total, item) => total + item.quantity*item.price ), 0))
-  const shippingCharges = 5.34;
-  const total = subtotal + shippingCharges;
+const Cart = () => {
+  const dispatch = useDispatch();
+  dispatch(updateTotalItems());
+  const {cartItems} = useSelector(store => store.cart);
+  const [subtotal, setSubtotal] = useState(0)
+  const [total, setTotal] = useState(0); 
+  const [shippingCharges, setShippingChanges] = useState(0);
   
   const clearCart = () => {
-    setCartItems([]);
-    setCart(cartItems);
-    setTotalItems(0);
-  }
-
-  const increaseQuantity = (image, color, title, price, quantity) => {
-    if(quantity < maxQuantityAllowed){
-      let tempArr = cartItems;
-      tempArr.some(item => {
-        if(item.image == image && item.color == color && item.title == title && item.price == price){
-          item.quantity+=1;
-          return true;
-        }
-      })
-      setCartItems(tempArr);
-      setTotalItems(cartItems.reduce(((total, item) => total + item.quantity), 0));
-      const newSubtotal = cartItems.reduce(((total, item) => total + item.quantity*item.price ), 0)
-      setSubtotal(newSubtotal);
-    } 
-  }
-
-  const decreaseQuantity = (image, color, title, price) => {
-    let tempArr = cartItems;
-    tempArr.some(item => {
-      if(item.image == image && item.color == color && item.title == title && item.price == price){
-        item.quantity-=1;
-        setCartItems(tempArr)
-        setTotalItems(cartItems.reduce(((total, item) => total + item.quantity), 0));
-        const newSubtotal = cartItems.reduce(((total, item) => total + item.quantity*item.price ), 0)
-        setSubtotal(newSubtotal);
-        if(item.quantity == 0)
-        deleteItem(image, color, title, price);
-        return true;
-      }
-    })
-  }
-
-  const deleteItem = (image, color, title, price) => {
-    let tempArr = cartItems;
-    tempArr = tempArr.filter(item => (item.image != image || item.color != color || item.title != title || item.price != price))
-    setCartItems(tempArr)
-    setCart(tempArr)
-    setTotalItems(tempArr.reduce(((total, item) => total + item.quantity), 0));
-    const newSubtotal = tempArr.reduce(((total, item) => total + item.quantity*item.price ), 0)
-    setSubtotal(newSubtotal);
+    dispatch(clearCartItems());
   }
 
   useEffect(() => {
     document.title="Cart"
   }, [])
   
-  if(cart.length == 0){
+  useEffect(() => {
+    setSubtotal(cartItems.reduce(((total, item) => total + item.quantity*item.price ), 0))
+    const isShippingCost = cartItems.some(item => item.freeShipping == false);
+    if(isShippingCost){
+      setShippingChanges(5.34)
+    }else{
+      setShippingChanges(0)
+    }
+    setTotal(subtotal + shippingCharges)
+  });
+
+  if(cartItems.length == 0){
     return (
       <>
         <Path title="cart" />
@@ -90,31 +60,7 @@ const Cart = ({cartItems, maxQuantityAllowed, setCartItems, setTotalItems}) => {
             </div>
             <hr className='mt-4 mb-12 border-0 border-t border-slate-300'/>
           </div>
-          {
-            cart.map(({title, image, color, quantity, price, id}, index) => {
-              const itemTotal = quantity * price;
-              return (
-                <article className='grid grid-cols-[1fr_1fr_1fr_1fr_auto] max-surface-duo:grid-cols-[1fr_1fr_1fr_auto] max-iphone:grid-cols-[1fr_1fr_auto] max-galaxy:grid-cols-[1fr_1fr] items-center grid-rows-[75px] gap-x-4 gap-y-12 mb-12 justify-items-center' key={index}>
-                  <Link to={`/products/${id}`} className='grid grid-cols-[100px_200px] max-surface-duo:grid-cols-[100px_100px] gap-4 items-center grid-rows-[75px]'>
-                    <img src={`/assets/${image}.jpeg`} alt={title} className='h-full w-full object-cover rounded block hover:shadow-md'/>
-                    <div>
-                      <h5 className='text-[0.85rem] leading-tight capitalize tracking-widest font-bold hover:underline'>{title}</h5>
-                      <p className='text-[0.85rem] text-[#617d98] tracking-widest capitalize flex items-center justify-start'>color :<span className={`w-3 h-3 inline-block bg-[${color}] ml-2 rounded opacity-75`}></span></p>
-                      <h5 className='text-yellow-700 tracking-widest leading-tight text-[0.9rem] hidden max-surface-duo:block'>${price}</h5>
-                    </div>
-                  </Link>
-                  <h5 className='text-yellow-700 tracking-widest leading-tight max-surface-duo:hidden'>${price}</h5>
-                  <div className='grid grid-cols-3 justify-items-center w-[100px] max-surface-duo:w-[80px] items-center'>
-                    <button type="button" className='w-6 h-4 py-4 cursor-pointer flex items-center justify-center max-surface-duo:text-[0.7rem]' onClick={() => decreaseQuantity(image, color, title, price)}><FaMinus /></button>
-                    <h2 className='text-[1.5rem] font-bold max-surface-duo:text-[1.2rem]'>{quantity}</h2>
-                    <button type="button" className='w-6 h-4 py-4 cursor-pointer flex items-center justify-center max-surface-duo:text-[0.7rem]' onClick={() => increaseQuantity(image, color, title, price, quantity)}><FaPlus /></button>
-                  </div>
-                  <h5 className='text-[#617d98] tracking-widest leading-tight max-iphone:hidden'>${itemTotal.toFixed(2)}</h5>
-                  <button type="button" className='w-6 h-6 flex items-center justify-center rounded cursor-pointer text-[1rem] text-white bg-[#bb2525] max-galaxy:hidden' onClick={() => deleteItem(image, color, title, price)}><MdDelete /></button>
-                </article>
-              )
-            })
-          }
+          { cartItems.map((item, index) => <CartProduct key={index} {...item} /> ) }
           <hr className="border-0 border-t border-slate-300"/>
           <div className='flex justify-between mt-8'>
             <Link to="/products" className='block capitalize py-1 px-2 bg-yellow-700 text-white rounded tracking-widest cursor-pointer'>continue shopping</Link>

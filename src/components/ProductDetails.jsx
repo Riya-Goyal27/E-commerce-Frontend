@@ -4,9 +4,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import {BsStarFill, BsStarHalf, BsStar} from 'react-icons/bs'
 import {TiTick} from 'react-icons/ti'
 import {FaPlus, FaMinus} from 'react-icons/fa'
-import data from './data';
+import data from '../data';
+import { addToCartItems} from '../features/cart/cartSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const ProductDetails = ({cartItems, maxQuantityAllowed, setCartItems, setTotalItems}) => {
+const ProductDetails = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const matchedItem = data.find(item => item.id == params.productId)
   const navigate = useNavigate();
@@ -15,14 +18,16 @@ const ProductDetails = ({cartItems, maxQuantityAllowed, setCartItems, setTotalIt
       navigate('/nomatch');
     }
   });
+
   if(matchedItem){
-    const {title, reviews, rating, brand, available, colors, description, images, price} = data.find(item => item.id == params.productId)
+    const {title, reviews, rating, brand, available, colors, description, images, price, freeShipping} = data.find(item => item.id == params.productId)
     const [url, setUrl] = useState(`/assets/${images[0]}.jpeg`)
     const [colorIndex, setColorIndex] = useState(0);
     const [itemQuantity, setItemQuantity] = useState(1);
     const fullStars = Math.floor(rating);
     const halfStar = ((rating - fullStars > 0) ? 1 : 0);
     const emptyStars = 5 - fullStars - halfStar;
+    const {maxQuantityAllowed} = useSelector(store => store.cart);
 
     const addToCart = () => {
       const newItem = {
@@ -31,22 +36,10 @@ const ProductDetails = ({cartItems, maxQuantityAllowed, setCartItems, setTotalIt
         color: colors[colorIndex],
         price: price,
         quantity: itemQuantity,
-        id: params.productId
+        id: params.productId,
+        freeShipping: freeShipping
       }
-      let tempArr = cartItems;
-      const alreadyInCart = tempArr.some(item => {
-        if(item.image == newItem.image && item.color == newItem.color && item.title == newItem.title && item.price == newItem.price){
-          item.quantity+=itemQuantity;
-          if(item.quantity > 3)
-          item.quantity = 3;
-          return true;
-        }
-      })
-      if(!alreadyInCart)
-      tempArr.push(newItem)
-
-      setCartItems(tempArr);
-      setTotalItems(cartItems.reduce(((total, item) => total + item.quantity), 0));
+      dispatch(addToCartItems(newItem));      
     }
 
     const increase = () => {
