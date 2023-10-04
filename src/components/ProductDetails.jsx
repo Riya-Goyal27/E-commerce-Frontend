@@ -102,13 +102,13 @@ const ProductDetails = () => {
                     {colors.map((item, index) => {
                       if(index == colorIndex){
                         return(
-                          <button key={index} className={`w-6 h-6 rounded-full mr-2 border-0 cursor-pointer flex items-center justify-center bg-[${item}] opacity-75`} onClick={() => {setColorIndex(index)}}>
+                          <button key={index} className={`w-6 h-6 rounded-full mr-2 border-0 cursor-pointer flex items-center justify-center opacity-75`} style={{backgroundColor:item}} onClick={() => {setColorIndex(index)}}>
                             <TiTick color='#fff'/>
                           </button>
                         )
                       }
                       return (
-                        <button key={index} className={`w-6 h-6 rounded-full mr-2 border-0 cursor-pointer flex items-center justify-center bg-[${item}] opacity-75`} onClick={() => {setColorIndex(index)}} />
+                        <button key={index} className={`w-6 h-6 rounded-full mr-2 border-0 cursor-pointer flex items-center justify-center opacity-75`} style={{backgroundColor:item}} onClick={() => {setColorIndex(index)}} />
                       )
                     })}
                   </div>
