@@ -31,7 +31,7 @@ const CartProduct = ({title, image, color, quantity, price, id}) => {
                     <img src={`/assets/${image}.jpeg`} alt={title} className='h-full w-full object-cover rounded block hover:shadow-md'/>
                     <div>
                         <h5 className='text-[0.85rem] leading-tight capitalize tracking-widest font-bold hover:underline'>{title}</h5>
-                        <p className='text-[0.85rem] text-[#617d98] tracking-widest capitalize flex items-center justify-start'>color :<span className={`w-3 h-3 inline-block bg-[${color}] ml-2 rounded opacity-75`}></span></p>
+                        <p className='text-[0.85rem] text-[#617d98] tracking-widest capitalize flex items-center justify-start'>color :<span className={`w-3 h-3 inline-block ml-2 rounded opacity-75`} style={{backgroundColor:color}}></span></p>
                         <h5 className='text-yellow-700 tracking-widest leading-tight text-[0.9rem] hidden max-surface-duo:block'>${price}</h5>
                     </div>
                 </Link>
